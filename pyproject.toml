@@ -2,14 +2,18 @@
 name = "email-triage-agent"
 version = "0.1.0"
 dependencies = [
+    "openenv>=0.2.0",
+    "openenv-core>=0.2.0",
     "fastapi",
-    "uvicorn",
-    "pydantic",
-    "openai",
-    "python-dotenv",
-    "requests",
-    "openenv-core>=0.2.0"
+    "uvicorn"
 ]
+
 
 [project.scripts]
 server = "server.app:app"
+dependencies = [
+    "openenv>=0.2.0",
+    "openenv-core>=0.2.0",
+    "fastapi",
+    "uvicorn"
+]
