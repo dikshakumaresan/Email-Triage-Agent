@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "An OpenEnv RL environment for email triage"
 readme = "README.md"
 requires-python = ">=3.10"
-# These dependencies are mandatory for the structural check
 dependencies = [
     "fastapi",
     "uvicorn",
@@ -12,11 +11,10 @@ dependencies = [
     "openai",
     "python-dotenv",
     "requests",
-    "openenv>=0.2.0",
-    "openenv-core>=0.2.0"
+    "openenv-core>=0.2.0",
+    "openenv>=0.2.0"
 ]
 
-# This entry point is exactly what the validator is looking for
 [project.scripts]
 server = "server.app:app"
 
