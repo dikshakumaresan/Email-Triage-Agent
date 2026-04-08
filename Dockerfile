@@ -1,7 +1,3 @@
-# Dockerfile
-# ----------
-# Containerizes the Email Triage Environment for HuggingFace Spaces.
-
 # Use slim Python 3.11 for a smaller image footprint
 FROM python:3.11-slim
 
@@ -23,15 +19,16 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# --- THE FIX ---
-# Instead of listing files one by one, 'COPY . .' copies EVERYTHING
-# in your repository folder into the Docker image, including pyproject.toml.
+# --- THE CRITICAL FIX ---
+# This copies EVERYTHING from your repo into the Docker image.
+# This ensures pyproject.toml and openenv.yaml are present for 'openenv validate'.
 COPY . .
 
 # Expose the port HuggingFace expects
 EXPOSE 7860
 
 # Health check to ensure the FastAPI server is running
+# Note: Ensure 'requests' is in your requirements.txt
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
   CMD python -c "import requests; requests.get('http://localhost:7860/health').raise_for_status()" \
   || exit 1
