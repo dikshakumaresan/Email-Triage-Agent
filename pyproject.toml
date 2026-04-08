@@ -3,15 +3,19 @@ name = "email-triage-agent"
 version = "0.1.0"
 description = "An OpenEnv RL environment for email triage"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "fastapi",
     "uvicorn",
     "pydantic",
     "openai",
     "python-dotenv",
-    "requests"
+    "requests",
+    "openenv-core>=0.2.0"
 ]
+
+[project.scripts]
+server = "server.app:app"
 
 [build-system]
 requires = ["setuptools>=61.0"]
