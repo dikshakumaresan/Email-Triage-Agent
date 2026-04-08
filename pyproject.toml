@@ -15,8 +15,6 @@ dependencies = [
 ]
 
 [project.scripts]
-# Note the change from server = "server.app:app" to server.app = "server.app:app"
-# Or simply use the standard:
 server = "server.app:app"
 
 [build-system]
