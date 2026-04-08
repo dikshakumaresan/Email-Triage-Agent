@@ -1,0 +1,24 @@
+# requirements.txt
+# -----------------
+# Python dependencies for the Email Triage Environment
+
+# Web framework — runs the FastAPI server
+fastapi==0.115.0
+
+# ASGI server — serves the FastAPI app
+uvicorn==0.30.6
+
+# Data validation — Pydantic models for typed observations/actions
+pydantic==2.7.4
+
+# HTTP client — used by inference.py to talk to the server
+requests==2.32.3
+
+# OpenAI client — used by inference.py for LLM calls
+openai==1.40.0
+
+# YAML parsing — used to read openenv.yaml
+pyyaml==6.0.2
+
+# Type hints support (Python 3.9 compatibility)
+typing-extensions==4.12.2

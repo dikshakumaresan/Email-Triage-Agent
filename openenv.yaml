@@ -1,0 +1,122 @@
+# openenv.yaml
+# ------------
+# OpenEnv specification metadata file.
+# This file is read by `openenv validate` during submission checks.
+
+name: email-triage-env
+version: "1.0.0"
+description: >
+  An OpenEnv-compliant environment where AI agents learn to triage emails.
+  The agent reads emails (or full threads) and must classify priority,
+  route to the correct team, and draft professional replies.
+  Three tasks range from easy priority classification to hard
+  multi-email thread analysis with conflicting signals.
+
+author: "Your Name / Team Name"
+tags:
+  - openenv
+  - email-triage
+  - nlp
+  - real-world
+  - classification
+  - routing
+
+# Server details
+api:
+  base_url: "http://localhost:7860"
+  endpoints:
+    reset: "POST /reset"
+    step:  "POST /step"
+    state: "GET  /state"
+
+# The 3 tasks
+tasks:
+  - name: task1_priority_classification
+    display_name: "Task 1: Priority Classification"
+    difficulty: easy
+    max_steps: 5
+    description: >
+      Read each email and classify its priority (critical/high/medium/low)
+      and category. 5 emails processed one at a time.
+    reward_range: [0.0, 1.0]
+
+  - name: task2_routing_and_reply
+    display_name: "Task 2: Priority + Routing + Reply"
+    difficulty: medium
+    max_steps: 5
+    description: >
+      Classify priority and category, route the email to the correct team,
+      and draft a professional reply. 5 emails processed one at a time.
+    reward_range: [0.0, 1.0]
+
+  - name: task3_thread_analysis
+    display_name: "Task 3: Multi-Email Thread Analysis"
+    difficulty: hard
+    max_steps: 3
+    description: >
+      Read full email threads with multiple messages that may contradict
+      each other. Identify required actions, route correctly, draft a
+      reply addressing all points, and summarize the thread context.
+      3 threads processed one at a time.
+    reward_range: [0.0, 1.0]
+
+# Observation space description
+observation_space:
+  task1:
+    email_id: string
+    sender: string
+    subject: string
+    body: string
+    timestamp: string
+    emails_remaining: integer
+    valid_priorities: list[string]
+    valid_categories: list[string]
+  task2:
+    email_id: string
+    sender: string
+    subject: string
+    body: string
+    timestamp: string
+    emails_remaining: integer
+    valid_priorities: list[string]
+    valid_categories: list[string]
+    valid_routes: list[string]
+  task3:
+    thread_id: string
+    subject: string
+    thread: list[dict]
+    thread_length: integer
+    threads_remaining: integer
+    valid_priorities: list[string]
+    valid_categories: list[string]
+    valid_routes: list[string]
+
+# Action space description
+action_space:
+  task1:
+    priority: "one of [critical, high, medium, low]"
+    category: "one of 14 valid categories"
+  task2:
+    priority: "one of [critical, high, medium, low]"
+    category: "one of 14 valid categories"
+    route_to: "one of 9 valid teams"
+    draft_reply: "string, minimum 20 words"
+  task3:
+    priority: "one of [critical, high, medium, low]"
+    category: "one of 14 valid categories"
+    route_to: "one of 9 valid teams"
+    required_actions: "list of action strings"
+    draft_reply: "string, minimum 40 words"
+    context_summary: "string, minimum 20 words"
+
+# Reward description
+reward:
+  type: float
+  range: [0.0, 1.0]
+  description: >
+    Weighted average of component scores.
+    Task 1: priority(0.5) + category(0.5)
+    Task 2: priority(0.25) + category(0.15) + routing(0.30) + reply(0.30)
+    Task 3: priority(0.15) + category(0.10) + routing(0.20) +
+            reply(0.25) + actions(0.20) + context(0.10)
+  partial_credit: true
