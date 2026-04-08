@@ -9,7 +9,8 @@ dependencies = [
     "uvicorn",
     "pydantic",
     "openai",
-    "python-dotenv"
+    "python-dotenv",
+    "requests"
 ]
 
 [build-system]
