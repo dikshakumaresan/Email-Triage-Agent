@@ -1,30 +1,7 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "email-triage-agent"
-version = "1.0.0"
-description = "An OpenEnv RL environment for email triage"
-readme = "README.md"
-requires-python = ">=3.9"
-license = { text = "MIT" }
-
-dependencies = [
-    "fastapi",
-    "uvicorn",
-    "pydantic",
-    "requests",
-    "openai"
-]
-
-# 🔥 THIS IS THE IMPORTANT PART
-[tool.setuptools]
-py-modules = [
-    "emails",
-    "environment",
-    "graders",
-    "tasks",
-    "server",
-    "inference"
-]
+name = "email-triage"
+version = "0.0.1"
